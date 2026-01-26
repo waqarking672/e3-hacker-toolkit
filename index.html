@@ -23,6 +23,10 @@
     --success: #10b981;
     --neon: #22d3ee;
     --glass: rgba(255, 255, 255, 0.05);
+    --purple: #8b5cf6;
+    --pink: #ec4899;
+    --orange: #f97316;
+    --yellow: #fbbf24;
 }
 
 body {
@@ -54,6 +58,30 @@ body {
 @keyframes gridMove {
     0% { transform: translate(0, 0); }
     100% { transform: translate(50px, 50px); }
+}
+
+/* Floating Particles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background: var(--neon);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+    opacity: 0.3;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) translateX(0); }
+    100% { transform: translateY(-100vh) translateX(100px); }
 }
 
 /* WhatsApp Force Popup */
@@ -113,12 +141,6 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 1px;
-}
-
-.popup-container h2 {
-    font-size: 24px;
-    color: #fff;
-    margin-bottom: 15px;
 }
 
 .popup-container p {
@@ -201,13 +223,6 @@ body {
     border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
-.countdown {
-    font-size: 18px;
-    color: #f87171;
-    margin-top: 20px;
-    font-family: monospace;
-}
-
 /* Toolkit (Initially Hidden) */
 #toolkit {
     display: none;
@@ -277,48 +292,74 @@ body {
     font-size: 24px;
 }
 
+/* Navigation Menu */
+.nav-menu {
+    background: rgba(2, 6, 23, 0.8);
+    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+    padding: 0 40px;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    padding: 15px 0;
+}
+
+.nav-item {
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+}
+
+.nav-item:hover:not(.active) {
+    background: rgba(14, 165, 233, 0.1);
+}
+
 /* Container */
 .container {
-    max-width: 1200px;
-    margin: 40px auto;
+    max-width: 1400px;
+    margin: 30px auto;
     padding: 0 20px;
 }
 
-.stats-bar {
-    background: var(--dark);
-    border-radius: 15px;
-    padding: 20px;
+.welcome-box {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(30, 58, 138, 0.1));
+    border-radius: 20px;
+    padding: 30px;
     margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid rgba(14, 165, 233, 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.stat-item {
+    border: 1px solid rgba(14, 165, 233, 0.3);
     text-align: center;
-    flex: 1;
 }
 
-.stat-value {
-    font-size: 32px;
-    font-weight: bold;
-    background: linear-gradient(90deg, var(--primary), var(--neon));
+.welcome-box h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, var(--neon), var(--primary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.stat-label {
-    font-size: 14px;
+.welcome-box p {
     color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* Tools Grid */
 .tools {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 25px;
     margin-bottom: 40px;
 }
@@ -349,6 +390,10 @@ body {
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--primary), var(--neon));
+}
+
+.tool.coming-soon::before {
+    background: linear-gradient(90deg, var(--purple), var(--pink));
 }
 
 .tool-header {
@@ -394,6 +439,7 @@ body {
     font-size: 14px;
     margin-bottom: 20px;
     line-height: 1.6;
+    min-height: 40px;
 }
 
 .tool-btn {
@@ -409,6 +455,8 @@ body {
     transition: all 0.3s;
     border: none;
     cursor: pointer;
+    width: 100%;
+    justify-content: center;
 }
 
 .tool-btn:hover {
@@ -416,23 +464,45 @@ body {
     box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
 }
 
-.tool-stats {
+.tool-btn.coming-soon {
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    cursor: not-allowed;
+}
+
+.tool-btn.coming-soon:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.tool-footer {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
     padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    color: #64748b;
 }
 
-.counter {
-    font-size: 13px;
-    color: #94a3b8;
+.tool-category {
+    background: rgba(14, 165, 233, 0.1);
+    padding: 3px 10px;
+    border-radius: 10px;
 }
 
-.counter span {
-    color: var(--neon);
+/* Coming Soon Badge */
+.coming-soon-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: white;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 12px;
     font-weight: bold;
-    margin-left: 5px;
+    transform: rotate(5deg);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
 }
 
 /* Footer */
@@ -464,31 +534,8 @@ body {
     background: var(--accent) !important;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .tools {
-        grid-template-columns: 1fr;
-    }
-    
-    .header {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
-    
-    .stats-bar {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .popup-container {
-        padding: 30px 20px;
-    }
-    
-    .join-btn-force {
-        padding: 18px 30px;
-        font-size: 18px;
-    }
+.status-coming {
+    background: var(--purple) !important;
 }
 
 /* Locked Tool Overlay */
@@ -506,6 +553,8 @@ body {
     flex-direction: column;
     border-radius: 20px;
     z-index: 10;
+    padding: 20px;
+    text-align: center;
 }
 
 .locked-overlay i {
@@ -518,13 +567,87 @@ body {
     color: white;
     font-size: 16px;
     margin-bottom: 20px;
-    text-align: center;
+}
+
+/* Progress Bar for Coming Soon */
+.progress-bar {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--pink));
+    border-radius: 10px;
+    width: 60%;
+    animation: progressPulse 2s infinite;
+}
+
+@keyframes progressPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tools {
+        grid-template-columns: 1fr;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .nav-menu {
+        overflow-x: auto;
+        padding: 0 20px;
+    }
+    
+    .nav-list {
+        gap: 5px;
+    }
+    
+    .nav-item {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .popup-container {
+        padding: 30px 20px;
+    }
+    
+    .join-btn-force {
+        padding: 18px 30px;
+        font-size: 18px;
+    }
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 <div class="bg-grid"></div>
+<div class="particles" id="particles"></div>
 
 <!-- WhatsApp Force Join Popup -->
 <div class="whatsapp-force-popup" id="whatsappForcePopup">
@@ -534,9 +657,15 @@ body {
         </div>
         
         <h1>🔓 UNLOCK HACKER TOOLS</h1>
-        <h2>Join WhatsApp Channel for Instant Access</h2>
+        <p>Join our WhatsApp channel to access premium hacking tools for FREE</p>
         
-        <p>Join Whatsapp Channel <strong>FREE</strong> To Access Toolkit</p>
+        <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> Access 15+ Premium Hacking Tools</li>
+            <li><i class="fas fa-check-circle"></i> Daily Updated Tools & Exploits</li>
+            <li><i class="fas fa-check-circle"></i> 24/7 Technical Support</li>
+            <li><i class="fas fa-check-circle"></i> Private Community Access</li>
+            <li><i class="fas fa-check-circle"></i> Early Access to New Tools</li>
+        </ul>
         
         <a href="https://whatsapp.com/channel/0029VajnN629RZAbp8aZAa1E" target="_blank" class="join-btn-force" id="joinLink">
             <i class="fab fa-whatsapp"></i>
@@ -549,7 +678,7 @@ body {
         
         <div class="warning-text">
             <i class="fas fa-exclamation-triangle"></i>
-            <strong>Note:</strong> You must join the WhatsApp channel to access tools. Verification needed!
+            <strong>Note:</strong> Verification required. You must join the WhatsApp channel to access all tools.
         </div>
     </div>
 </div>
@@ -574,328 +703,474 @@ body {
         </div>
     </div>
 
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="showTab('all-tools')">
+                <i class="fas fa-tools"></i> All Tools
+            </li>
+            <li class="nav-item" onclick="showTab('coming-soon')">
+                <i class="fas fa-hourglass-half"></i> Coming Soon
+            </li>
+            <li class="nav-item" onclick="showTab('premium')">
+                <i class="fas fa-crown"></i> Premium
+            </li>
+            <li class="nav-item" onclick="showTab('new')">
+                <i class="fas fa-star"></i> New Tools
+            </li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-value" id="totalUses">0</div>
-                <div class="stat-label">Total Uses</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="activeTools">6</div>
-                <div class="stat-label">Active Tools</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="todayUses">0</div>
-                <div class="stat-label">Today's Uses</div>
+        <div class="welcome-box">
+            <h2>Welcome to E3 Hacker Toolkit v3.0</h2>
+            <p>Access premium hacking tools and utilities. All tools are verified and updated regularly. Join our community for support and updates.</p>
+        </div>
+
+        <!-- All Tools Tab -->
+        <div class="tab-content active" id="all-tools">
+            <div class="tools">
+                <!-- Camera Hack Tool -->
+                <div class="tool">
+                    <div class="locked-overlay" id="lockCamera">
+                        <i class="fas fa-lock"></i>
+                        <p>Join WhatsApp Channel to unlock this tool</p>
+                        <button class="tool-btn" onclick="showForcePopup()">
+                            <i class="fab fa-whatsapp"></i> UNLOCK TOOL
+                        </button>
+                    </div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <img src="https://n.f-a-k.workers.dev/1000948355.webp" alt="Camera">
+                        </div>
+                        <div class="tool-info">
+                            <h3>CAMERA HA3K</h3>
+                            <span class="status status-online">ONLINE</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Front Camera Ha3k Tool for security testing</p>
+                    <a href="https://free-pkj-hack.vercel.app/" class="tool-btn" onclick="return unlockFirst('camera')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Launch Tool
+                    </a>
+                    <div class="tool-footer">
+                        <span class="tool-category">Security</span>
+                        <span>Advanced</span>
+                    </div>
+                </div>
+
+                <!-- TikTok Downloader -->
+                <div class="tool">
+                    <div class="locked-overlay" id="lockTiktok">
+                        <i class="fas fa-lock"></i>
+                        <p>Join WhatsApp Channel to unlock this tool</p>
+                        <button class="tool-btn" onclick="showForcePopup()">
+                            <i class="fab fa-whatsapp"></i> UNLOCK TOOL
+                        </button>
+                    </div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <img src="https://n.f-a-k.workers.dev/1000948358.webp" alt="TikTok">
+                        </div>
+                        <div class="tool-info">
+                            <h3>TIKTOK DOWNLOADER PRO</h3>
+                            <span class="status status-online">ONLINE</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Download HD videos from TikTok without watermark</p>
+                    <a href="https://tiktok-video-downlader-pro.vercel.app/" class="tool-btn" onclick="return unlockFirst('tiktok')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Launch Tool
+                    </a>
+                    <div class="tool-footer">
+                        <span class="tool-category">Downloader</span>
+                        <span>No Watermark</span>
+                    </div>
+                </div>
+
+                <!-- Secure Code Viewer -->
+                <div class="tool">
+                    <div class="locked-overlay" id="lockInsta">
+                        <i class="fas fa-lock"></i>
+                        <p>Join WhatsApp Channel to unlock this tool</p>
+                        <button class="tool-btn" onclick="showForcePopup()">
+                            <i class="fab fa-whatsapp"></i> UNLOCK TOOL
+                        </button>
+                    </div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <img src="https://n.f-a-k.workers.dev/1000948363.webp" alt="web2code">
+                        </div>
+                        <div class="tool-info">
+                            <h3>SECURE CODE VIEWER</h3>
+                            <span class="status status-online">ONLINE</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Download Website All Secure Code for analysis</p>
+                    <a href="https://web-scraper-theta.vercel.app/" class="tool-btn" onclick="return unlockFirst('insta')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Launch Tool
+                    </a>
+                    <div class="tool-footer">
+                        <span class="tool-category">Code Analysis</span>
+                        <span>Web Security</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Hack -->
+                <div class="tool">
+                    <div class="locked-overlay" id="lockSource">
+                        <i class="fas fa-lock"></i>
+                        <p>Join WhatsApp Channel to unlock this tool</p>
+                        <button class="tool-btn" onclick="showForcePopup()">
+                            <i class="fab fa-whatsapp"></i> UNLOCK TOOL
+                        </button>
+                    </div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <img src="https://n.f-a-k.workers.dev/1000948369.webp" alt="Source">
+                        </div>
+                        <div class="tool-info">
+                            <h3>MOBILE HACK</h3>
+                            <span class="status status-beta">ONLINE</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Mobile security testing and vulnerability scanner</p>
+                    <a href="https://youtu.be/nA-1yz6E058?si=seriDhiNErpWvuEX" class="tool-btn" onclick="return unlockFirst('source')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Launch Tool
+                    </a>
+                    <div class="tool-footer">
+                        <span class="tool-category">Mobile Security</span>
+                        <span>YouTube Tutorial</span>
+                    </div>
+                </div>
+
+                <!-- AI Image Generator -->
+                <div class="tool">
+                    <div class="locked-overlay" id="lockSim">
+                        <i class="fas fa-lock"></i>
+                        <p>Join WhatsApp Channel to unlock this tool</p>
+                        <button class="tool-btn" onclick="showForcePopup()">
+                            <i class="fab fa-whatsapp"></i> UNLOCK TOOL
+                        </button>
+                    </div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <img src="https://n.f-a-k.workers.dev/1000948359.webp" alt="AI">
+                        </div>
+                        <div class="tool-info">
+                            <h3>AI IMAGE GENERATOR</h3>
+                            <span class="status status-beta">ONLINE</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Advanced AI image generator Free and Unlimited</p>
+                    <a href="https://e3-hacker-ai-image.vercel.app/" class="tool-btn" onclick="return unlockFirst('sim')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Launch Tool
+                    </a>
+                    <div class="tool-footer">
+                        <span class="tool-category">AI Tools</span>
+                        <span>Unlimited</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="tools">
-            <div class="tool">
-                <div class="locked-overlay" id="lockCamera">
-                    <i class="fas fa-lock"></i>
-                    <p>Join WhatsApp Channel<br>to unlock this tool</p>
-                    <button class="tool-btn" onclick="showForcePopup()">
-                        <i class="fab fa-whatsapp"></i> UNLOCK TOOL
+        <!-- Coming Soon Tab -->
+        <div class="tab-content" id="coming-soon">
+            <h2 style="color: var(--neon); margin-bottom: 25px; font-size: 24px;">
+                <i class="fas fa-hourglass-half"></i> Upcoming Tools & Features
+            </h2>
+            <div class="tools">
+                <!-- WiFi Hacking Tool -->
+                <div class="tool coming-soon">
+                    <div class="coming-soon-badge">COMING SOON</div>
+                    <div class="tool-header">
+                        <div class="tool-icon" style="background: rgba(139, 92, 246, 0.1);">
+                            <i class="fas fa-wifi" style="font-size: 25px; color: var(--purple);"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>WiFi PENTEST SUITE</h3>
+                            <span class="status status-coming">DEVELOPMENT</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Complete WiFi penetration testing suite with WPA2/WPA3 cracking</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <button class="tool-btn coming-soon" style="margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Estimated: 30 Days
                     </button>
-                </div>
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <img src="https://n.f-a-k.workers.dev/1000948355.webp" alt="Camera">
-                    </div>
-                    <div class="tool-info">
-                        <h3>CAMERA HA3K</h3>
-                        <span class="status status-online">ONLINE</span>
+                    <div class="tool-footer">
+                        <span class="tool-category">WiFi Security</span>
+                        <span>Advanced</span>
                     </div>
                 </div>
-                <p class="tool-desc">Front Camera Ha3k Tool</p>
-                <a href="https://free-pkj-hack.vercel.app/" class="tool-btn" onclick="return count('camera')">
-                    <i class="fas fa-external-link-alt"></i>
-                    Launch Tool
-                </a>
-                <div class="tool-stats">
-                    <div class="counter">Used: <span id="camera">0</span> times</div>
-                    <div class="counter">Last: <span>Today</span></div>
+
+                <!-- Password Cracker -->
+                <div class="tool coming-soon">
+                    <div class="coming-soon-badge">COMING SOON</div>
+                    <div class="tool-header">
+                        <div class="tool-icon" style="background: rgba(236, 72, 153, 0.1);">
+                            <i class="fas fa-key" style="font-size: 25px; color: var(--pink);"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>PASSWORD CRACKER PRO</h3>
+                            <span class="status status-coming">TESTING</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Advanced password recovery and brute-force tool with GPU acceleration</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                    <button class="tool-btn coming-soon" style="margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Estimated: 15 Days
+                    </button>
+                    <div class="tool-footer">
+                        <span class="tool-category">Security</span>
+                        <span>High Performance</span>
+                    </div>
+                </div>
+
+                <!-- Network Scanner -->
+                <div class="tool coming-soon">
+                    <div class="coming-soon-badge">COMING SOON</div>
+                    <div class="tool-header">
+                        <div class="tool-icon" style="background: rgba(249, 115, 22, 0.1);">
+                            <i class="fas fa-network-wired" style="font-size: 25px; color: var(--orange);"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>NETWORK SCANNER X</h3>
+                            <span class="status status-coming">PLANNING</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Advanced network discovery and vulnerability scanner</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%;"></div>
+                    </div>
+                    <button class="tool-btn coming-soon" style="margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Estimated: 45 Days
+                    </button>
+                    <div class="tool-footer">
+                        <span class="tool-category">Network</span>
+                        <span>Discovery</span>
+                    </div>
+                </div>
+
+                <!-- Social Media Toolkit -->
+                <div class="tool coming-soon">
+                    <div class="coming-soon-badge">COMING SOON</div>
+                    <div class="tool-header">
+                        <div class="tool-icon" style="background: rgba(251, 191, 36, 0.1);">
+                            <i class="fas fa-share-alt" style="font-size: 25px; color: var(--yellow);"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>SOCIAL MEDIA TOOLKIT</h3>
+                            <span class="status status-coming">DESIGN</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Complete suite for social media analysis and automation</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%;"></div>
+                    </div>
+                    <button class="tool-btn coming-soon" style="margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Estimated: 60 Days
+                    </button>
+                    <div class="tool-footer">
+                        <span class="tool-category">Social Media</span>
+                        <span>Automation</span>
+                    </div>
+                </div>
+
+                <!-- Data Recovery Pro -->
+                <div class="tool coming-soon">
+                    <div class="coming-soon-badge">COMING SOON</div>
+                    <div class="tool-header">
+                        <div class="tool-icon" style="background: rgba(34, 211, 238, 0.1);">
+                            <i class="fas fa-hdd" style="font-size: 25px; color: var(--neon);"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>DATA RECOVERY PRO</h3>
+                            <span class="status status-coming">PLANNING</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Advanced data recovery tool for deleted files and partitions</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%;"></div>
+                    </div>
+                    <button class="tool-btn coming-soon" style="margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Estimated: 90 Days
+                    </button>
+                    <div class="tool-footer">
+                        <span class="tool-category">Recovery</span>
+                        <span>Deep Scan</span>
+                    </div>
+                </div>
+
+                <!-- Reverse Engineering -->
+                <div class="tool coming-soon">
+                    <div class="coming-soon-badge">COMING SOON</div>
+                    <div class="tool-header">
+                        <div class="tool-icon" style="background: rgba(16, 185, 129, 0.1);">
+                            <i class="fas fa-code-branch" style="font-size: 25px; color: var(--success);"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>REVERSE ENGINEERING</h3>
+                            <span class="status status-coming">RESEARCH</span>
+                        </div>
+                    </div>
+                    <p class="tool-desc">Binary analysis and reverse engineering toolkit</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%;"></div>
+                    </div>
+                    <button class="tool-btn coming-soon" style="margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Estimated: 120 Days
+                    </button>
+                    <div class="tool-footer">
+                        <span class="tool-category">Analysis</span>
+                        <span>Advanced</span>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="tool">
-                <div class="locked-overlay" id="lockTiktok">
-                    <i class="fas fa-lock"></i>
-                    <p>Join WhatsApp Channel<br>to unlock this tool</p>
-                    <button class="tool-btn" onclick="showForcePopup()">
-                        <i class="fab fa-whatsapp"></i> UNLOCK TOOL
-                    </button>
-                </div>
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <img src="https://n.f-a-k.workers.dev/1000948358.webp" alt="TikTok">
-                    </div>
-                    <div class="tool-info">
-                        <h3>TIKTOK DOWNLOADER PRO</h3>
-                        <span class="status status-online">ONLINE</span>
-                    </div>
-                </div>
-                <p class="tool-desc">Download HD videos from TikTok without watermark.</p>
-                <a href="https://tiktok-video-downlader-pro.vercel.app/" class="tool-btn" onclick="return count('tiktok')">
-                    <i class="fas fa-external-link-alt"></i>
-                    Launch Tool
-                </a>
-                <div class="tool-stats">
-                    <div class="counter">Used: <span id="tiktok">0</span> times</div>
-                    <div class="counter">Last: <span>Today</span></div>
-                </div>
+        <!-- Premium & New Tabs (Placeholders) -->
+        <div class="tab-content" id="premium">
+            <div style="text-align: center; padding: 50px; color: #94a3b8;">
+                <i class="fas fa-crown" style="font-size: 60px; color: var(--yellow); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--neon); margin-bottom: 15px;">Premium Tools</h3>
+                <p>Premium tools will be available soon for channel members.</p>
             </div>
+        </div>
 
-            <div class="tool">
-                <div class="locked-overlay" id="lockInsta">
-                    <i class="fas fa-lock"></i>
-                    <p>Join WhatsApp Channel<br>to unlock this tool</p>
-                    <button class="tool-btn" onclick="showForcePopup()">
-                        <i class="fab fa-whatsapp"></i> UNLOCK TOOL
-                    </button>
-                </div>
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <img src="https://n.f-a-k.workers.dev/1000948363.webp" alt="web2code">
-                    </div>
-                    <div class="tool-info">
-                        <h3>SECURE CODE VIEWER</h3>
-                        <span class="status status-online">ONLINE</span>
-                    </div>
-                </div>
-                <p class="tool-desc">Download Website All Secure Code</p>
-                <a href="https://web-scraper-theta.vercel.app/" class="tool-btn" onclick="return count('insta')">
-                    <i class="fas fa-external-link-alt"></i>
-                    Launch Tool
-                </a>
-                <div class="tool-stats">
-                    <div class="counter">Used: <span id="insta">0</span> times</div>
-                    <div class="counter">Last: <span>2 days</span></div>
-                </div>
-            </div>
-
-            <div class="tool">
-                <div class="locked-overlay" id="lockSource">
-                    <i class="fas fa-lock"></i>
-                    <p>Join WhatsApp Channel<br>to unlock this tool</p>
-                    <button class="tool-btn" onclick="showForcePopup()">
-                        <i class="fab fa-whatsapp"></i> UNLOCK TOOL
-                    </button>
-                </div>
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <img src="https://n.f-a-k.workers.dev/1000948369.webp" alt="Source">
-                    </div>
-                    <div class="tool-info">
-                        <h3>MOBILE HACK</h3>
-                        <span class="status status-beta">ONLINE</span>
-                    </div>
-                </div>
-                <p class="tool-desc">Download Website All Secure Code s</p>
-                <a href="https://youtu.be/nA-1yz6E058?si=seriDhiNErpWvuEX" class="tool-btn" onclick="return count('source')">
-                    <i class="fas fa-external-link-alt"></i>
-                    Launch Tool
-                </a>
-                <div class="tool-stats">
-                    <div class="counter">Used: <span id="source">0</span> times</div>
-                    <div class="counter">Status: <span>YOUTUBE</span></div>
-                </div>
-            </div>
-
-            <div class="tool">
-                <div class="locked-overlay" id="lockSim">
-                    <i class="fas fa-lock"></i>
-                    <p>Join WhatsApp Channel<br>to unlock this tool</p>
-                    <button class="tool-btn" onclick="showForcePopup()">
-                        <i class="fab fa-whatsapp"></i> UNLOCK TOOL
-                    </button>
-                </div>
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <img src="https://n.f-a-k.workers.dev/1000948359.webp" alt="AI">
-                    </div>
-                    <div class="tool-info">
-                        <h3>AI IMAGE GENERATOR</h3>
-                        <span class="status status-beta">ONLINE</span>
-                    </div>
-                </div>
-                <p class="tool-desc">Advanced AI image generator Free and Unlimited.</p>
-                <a href="https://e3-hacker-ai-image.vercel.app/" class="tool-btn" onclick="return count('sim')">
-                    <i class="fas fa-external-link-alt"></i>
-                    Launch Tool
-                </a>
-                <div class="tool-stats">
-                    <div class="counter">Admin: <span>E3-HACKER</span></div>
-                    <div class="counter">STATUS: <span>TODAY</span></div>
-                </div>
-            </div>
-
-            <div class="tool">
-                <div class="locked-overlay" id="lockVpn">
-                    <i class="fas fa-lock"></i>
-                    <p>Join WhatsApp Channel<br>to unlock this tool</p>
-                    <button class="tool-btn" onclick="showForcePopup()">
-                        <i class="fab fa-whatsapp"></i> UNLOCK TOOL
-                    </button>
-                </div>
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <img src="https://n.f-a-k.workers.dev/1000950208.webp" alt="VPN">
-                    </div>
-                    <div class="tool-info">
-                        <h3>WHATSAPL CHANNEL REACTS</h3>
-                        <span class="status status-beta">ONLINE</span>
-                    </div>
-                </div>
-                <p class="tool-desc">GET FREE UNLIMITED WHATSAPP CHANNEL POST CUSTOM REACTS</p>
-                <a href="https://asitha.top/login?ref=waqarkin6284" class="tool-btn" onclick="return count('vpn')">
-                    <i class="fas fa-external-link-alt"></i>
-                    Launch Tool
-                </a>
-                <div class="tool-stats">
-                    <div class="counter">ETA: <span>TODAY</span></div>
-                    <div class="counter">Progress: <span>COMPLETE</span></div>
-                </div>
+        <div class="tab-content" id="new">
+            <div style="text-align: center; padding: 50px; color: #94a3b8;">
+                <i class="fas fa-star" style="font-size: 60px; color: var(--neon); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--neon); margin-bottom: 15px;">New Tools Coming Soon</h3>
+                <p>Check the "Coming Soon" tab for upcoming tools and features.</p>
             </div>
         </div>
     </div>
 
     <div class="footer">
-        <p>© 2026 E3 HACKER TOOLKIT • v3.0 • WHATSAPP CHANNEL ACCESS</p>
-        <p class="version">Build: 2026.01.22.1830 • Tools: <span id="unlockedTools">0</span>/6 unlocked</p>
+        <p>E3 HACKER TOOLKIT v3.0 • FOR EDUCATIONAL PURPOSES ONLY</p>
+        <p class="version">Build: 2024.03.15 • WhatsApp Channel Member Access</p>
+        <p style="margin-top: 10px; font-size: 12px; color: #64748b;">
+            <i class="fas fa-exclamation-circle"></i> Use tools responsibly and only on systems you own or have permission to test.
+        </p>
     </div>
 </div>
 
 <script>
-// WhatsApp Force Join System
-window.onload = function() {
-    // Check if user already unlocked tools
-    const hasUnlocked = localStorage.getItem('toolsUnlocked');
+// Create floating particles
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 50;
     
-    if (hasUnlocked === 'true') {
-        // User already unlocked, show toolkit
-        unlockAllTools();
-    } else {
-        // Show force join popup
-        document.getElementById('whatsappForcePopup').style.display = 'flex';
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random size
+        const size = Math.random() * 4 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        
+        // Random color
+        const colors = ['#0ea5e9', '#22d3ee', '#06b6d4', '#3b82f6', '#8b5cf6'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.background = color;
+        
+        // Random animation
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 5;
+        particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+        
+        particlesContainer.appendChild(particle);
     }
-    
-    // Initialize counters
-    updateStats();
-};
+}
 
-// Unlock tools function (simple click - no verification)
+// Tab navigation
+function showTab(tabId) {
+    // Update active nav item
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+    
+    // Show active tab content
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.getElementById(tabId).classList.add('active');
+}
+
+// Check if user has joined WhatsApp channel
+let userJoined = false;
+
 function unlockTools() {
-    // Unlock toolkit
-    localStorage.setItem('toolsUnlocked', 'true');
-    localStorage.setItem('unlockDate', new Date().toISOString());
+    const popup = document.getElementById('whatsappForcePopup');
+    const toolkit = document.getElementById('toolkit');
     
-    // Hide popup
-    document.getElementById('whatsappForcePopup').style.display = 'none';
+    // Check if user actually clicked the WhatsApp link
+    let linkClicked = false;
+    const joinLink = document.getElementById('joinLink');
     
-    // Show and unlock toolkit
-    unlockAllTools();
+    joinLink.addEventListener('click', function() {
+        linkClicked = true;
+        localStorage.setItem('whatsappJoined', 'true');
+    });
     
-    // Update unlocked tools count
-    updateUnlockedCount();
+    // Check localStorage for previous join
+    if (localStorage.getItem('whatsappJoined') === 'true' || linkClicked) {
+        userJoined = true;
+        popup.style.display = 'none';
+        toolkit.style.display = 'block';
+        unlockAllTools();
+        
+        // Show welcome notification
+        setTimeout(() => {
+            alert('✅ Welcome to E3 Hacker Toolkit! All tools are now unlocked.');
+        }, 500);
+    } else {
+        alert('⚠️ Please join the WhatsApp channel first by clicking the JOIN button.');
+    }
 }
 
-// Unlock all tools and show toolkit
 function unlockAllTools() {
-    // Show toolkit
-    document.getElementById('toolkit').style.display = 'block';
-    
-    // Remove locked overlays
-    const locks = ['lockCamera', 'lockTiktok', 'lockInsta', 'lockSource', 'lockSim', 'lockVpn'];
-    locks.forEach(lockId => {
-        const lock = document.getElementById(lockId);
-        if (lock) lock.style.display = 'none';
+    document.querySelectorAll('.locked-overlay').forEach(overlay => {
+        overlay.style.display = 'none';
     });
-    
-    // Enable tool buttons
-    const toolBtns = document.querySelectorAll('.tool-btn');
-    toolBtns.forEach(btn => {
-        btn.style.pointerEvents = 'auto';
-        btn.style.opacity = '1';
-    });
-    
-    // Set session ID
-    const sessionId = Math.random().toString(36).substring(2, 15);
-    localStorage.setItem("sessionId", sessionId);
 }
 
-// Show force popup when clicking locked tools
 function showForcePopup() {
     document.getElementById('whatsappForcePopup').style.display = 'flex';
 }
 
-// Tool Usage Counter
-function count(id) {
-    // Check if user has unlocked tools
-    const hasUnlocked = localStorage.getItem('toolsUnlocked');
-    
-    if (hasUnlocked !== 'true') {
+function unlockFirst(toolName) {
+    if (!userJoined) {
         showForcePopup();
-        return false; // Prevent link opening
+        return false;
     }
-    
-    let c = parseInt(localStorage.getItem(id) || 0);
-    c++;
-    localStorage.setItem(id, c);
-    
-    // Update display
-    document.getElementById(id).textContent = c;
-    
-    // Update total uses
-    updateStats();
-    
-    // Update unlocked tools count
-    updateUnlockedCount();
-    
-    // Today's uses
-    const today = new Date().toDateString();
-    let todayUses = JSON.parse(localStorage.getItem('todayUses') || '{}');
-    todayUses[today] = (todayUses[today] || 0) + 1;
-    localStorage.setItem('todayUses', JSON.stringify(todayUses));
-    
-    return true; // Allow link to open
+    return true;
 }
 
-// Update statistics
-function updateStats() {
-    const tools = ['camera', 'tiktok', 'insta', 'source', 'sim', 'vpn'];
-    let total = 0;
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
     
-    tools.forEach(id => {
-        const count = parseInt(localStorage.getItem(id) || 0);
-        document.getElementById(id).textContent = count;
-        total += count;
-    });
-    
-    document.getElementById('totalUses').textContent = total;
-    
-    // Today's uses
-    const today = new Date().toDateString();
-    const todayUses = JSON.parse(localStorage.getItem('todayUses') || '{}');
-    document.getElementById('todayUses').textContent = todayUses[today] || 0;
-}
-
-// Update unlocked tools count
-function updateUnlockedCount() {
-    const hasUnlocked = localStorage.getItem('toolsUnlocked');
-    if (hasUnlocked === 'true') {
-        document.getElementById('unlockedTools').textContent = '6';
+    // Check if already joined
+    if (localStorage.getItem('whatsappJoined') === 'true') {
+        userJoined = true;
+        document.getElementById('whatsappForcePopup').style.display = 'none';
+        document.getElementById('toolkit').style.display = 'block';
+        unlockAllTools();
     }
-}
-
-// Initialize all counters
-['camera','tiktok','insta','source','sim','vpn'].forEach(id => {
-    document.getElementById(id).textContent = localStorage.getItem(id) || 0;
 });
-
-// Initialize unlocked count
-updateUnlockedCount();
 </script>
 </body>
 </html>
